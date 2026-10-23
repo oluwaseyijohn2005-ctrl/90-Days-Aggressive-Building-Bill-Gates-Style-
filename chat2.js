@@ -1,40 +1,24 @@
-
-console.log(todecimal("101",2))
-console.log(todecimal("a121",16))
-console.log(todecimal("777",8))
-console.log(todecimal("zz",36))
-
-
-function toBinary(deci,base){
-     const alpha = "0123456789ABCDEFGHIJKLMNOPQRSTUVWSXYZ"
-  let remainder = undefined
-  let joined = ""
-let array = []
-
-if(deci === 0){
-    return "0"
-}
-
-    while( deci > 0){
-        remainder = deci % base
-        deci = Math.floor(deci / base)
-        array.push(alpha[remainder])
-    }
- 
- joined = array.reverse().join("")
-return joined
-}
-console.log(toBinary(52,2))
-console.log(toBinary(255,16))
-
-
 function convert(value, fromBase, toBase) {
 let negative = ""
-if(value.includes("-")){
+if(value.startsWith("-")){
  negative = value.slice(0,1)
  value = value.slice(1) 
 }
-const alpha = "0123456789ABCDEFGHIJKLMNOPQRSTUVWSXYZ"
+let pointSplit = ""
+if(value.includes(".")){
+    pointSplit = value.split(".")
+    if(pointSplit.length >= 3){
+        return "Inavlid Base"
+    }
+    value = pointSplit[0]
+    if(value === ""){
+        value = "0"
+    }
+    pointSplit = pointSplit[1].split("")
+}
+console.log(pointSplit)
+const alpha = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+let pointReminder = 0
 let converted = 0 
 let joined = ""
 let arrayold = value.toUpperCase().split("").reverse()
@@ -43,25 +27,29 @@ let array = []
 
 for(let i = 0; i < arrayold.length; i++){
     
- if(arrayold.indexOf(alpha[i]) >= fromBase){
-return `${arrayold.indexOf(alpha[i])} is not a valid base ${fromBase}`
+ if(alpha.indexOf(arrayold[i]) >= fromBase || alpha.indexOf(arrayold[i]) === -1){
+        return `Error: ${arrayold[i]} Is not a valid base ${fromBase}`
     }
 
 converted += alpha.indexOf(arrayold[i]) * (fromBase ** i)
 }
-  let temp = converted
-if(temp === 0){
-    return "0"
+for(let i = 0; i < pointSplit.length; i++){
+    pointReminder += alpha.indexOf(pointSplit[i]) * (1 / fromBase ** (i + 1))
 }
+console.log(pointReminder)
+  let temp = converted
+// if(temp === 0){
+//     return "0"
+// }
 while(temp > 0){
         remainder = temp % toBase
         temp  = Math.floor(temp / toBase)
         array.push(alpha[remainder])
     } 
-joined = negative + array.reverse().join("")
+joined = negative + array.reverse().join("") + pointReminder 
 return joined 
  
 }
-
 console.log(convert("-FF", 16, 2))
-console.log(convert("-1010", 2, 10))
+console.log(convert("0.11", 2, 10))
+

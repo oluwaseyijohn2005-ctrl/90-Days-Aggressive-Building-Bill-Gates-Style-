@@ -1,4 +1,21 @@
 function convert(value, fromBase, toBase) {
+    const alpha = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  if(typeof(value) === "number"){
+    let firstArray = fromBase.split("").reverse()
+    let secondArray = toBase.split("").reverse()
+    let longestArray = []
+    if(firstArray.length >= secondArray.length){
+        longestArray = firstArray
+    }else{
+        longestArray = secondArray
+    }
+   let index = 0
+while(index < longestArray.length){
+
+}
+        return longestArray
+    }
+
 let array = []
 let negative = "" 
 if(value.startsWith("-")){
@@ -23,7 +40,7 @@ if(value.includes(".")){
     }
     pointSplit = pointSplit[1].split("")
 }
-const alpha = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
 let pointReminder = 0
 let converted = 0 
 let joined = ""
@@ -78,6 +95,7 @@ joined = negative + interPart + dot + fractions
 return joined 
  
 }
+console.log(convert(2,"11", "11"))
 console.log(convert("-FF", 16, 2))
 console.log(convert("0.11", 2, 10))
 console.log(convert("0", 16, 2))

@@ -1,21 +1,38 @@
 function convert(value, fromBase, toBase) {
-    const alpha = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-  if(typeof(value) === "number"){
+const alpha = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+if(value === 2){
     let firstArray = fromBase.split("").reverse()
     let secondArray = toBase.split("").reverse()
-    let longestArray = []
-    if(firstArray.length >= secondArray.length){
-        longestArray = firstArray
+    let longest = []
+    let added = []
+    if(firstArray.length > secondArray.length){
+        longest = firstArray
     }else{
-        longestArray = secondArray
+        longest = secondArray
     }
-   let index = 0
-while(index < longestArray.length){
-
+    let count = 0
+    let div = 0
+    while(count < longest.length){
+        
+   
+        let add = alpha.indexOf(firstArray[count]) + alpha.indexOf(secondArray[count]) + div
+        alpha.indexOf(firstArray[count]) = -1 ? 0 : alpha.indexOf(firstArray[count])
+        alpha.indexOf(secondArray[count]) = -1 ? 0 : alpha.indexOf(secondArray[count])
+        console.log(div)
+        if(add >= value){
+            added.push( add % value)
+            div = Math.floor(add / value)
+            console.log(div)
+        }else{
+            added.push(div)
+        }
+        count++
+    }
+    if(count === longest.length && div < value){
+     added.push(div)
+        }
+return added
 }
-        return longestArray
-    }
-
 let array = []
 let negative = "" 
 if(value.startsWith("-")){
@@ -95,7 +112,7 @@ joined = negative + interPart + dot + fractions
 return joined 
  
 }
-console.log(convert(2,"11", "11"))
+console.log(convert(2,"1111", "11"))
 console.log(convert("-FF", 16, 2))
 console.log(convert("0.11", 2, 10))
 console.log(convert("0", 16, 2))
